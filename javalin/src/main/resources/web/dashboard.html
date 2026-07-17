@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promea Dashboard</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/assets/web/dashboard.css">
+</head>
+
+<body>
+<main class="shell">
+    <header class="topbar">
+        <div class="brand">
+            <img src="/assets/logo.svg" alt="Promea logo">
+            <div>
+                <span class="brand-name">Promea</span>
+                <span class="brand-tagline">Professional Metrics Analytics</span>
+            </div>
+        </div>
+        <div class="status">
+            <span class="status-dot"></span>
+            <span id="refresh-status">Live data</span>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div>
+            <h1 id="dashboard-title">Dashboard</h1>
+            <p id="dashboard-description" class="description"></p>
+        </div>
+        <div class="meta-grid" aria-label="Dashboard summary">
+            <div class="meta-item">
+                <span class="meta-label">Components</span>
+                <span id="component-count" class="meta-value">0</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Refresh</span>
+                <span id="refresh-value" class="meta-value">Manual</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-heading">
+            <h2>Metrics</h2>
+            <span id="metrics-count" class="section-count"></span>
+        </div>
+        <div id="metrics" class="metric-grid"></div>
+    </section>
+
+    <section class="section">
+        <div class="section-heading">
+            <h2>Charts</h2>
+            <span id="charts-count" class="section-count"></span>
+        </div>
+        <div id="charts" class="chart-grid"></div>
+    </section>
+
+    <section class="section">
+        <div class="section-heading">
+            <h2>Tables</h2>
+            <span id="tables-count" class="section-count"></span>
+        </div>
+        <div id="tables"></div>
+    </section>
+</main>
+
+<script src="/assets/web/dashboard.js" defer></script>
+</body>
+
+</html>

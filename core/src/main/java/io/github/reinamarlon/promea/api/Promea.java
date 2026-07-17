@@ -4,18 +4,23 @@ import io.github.reinamarlon.promea.config.PromeaConfig;
 import io.github.reinamarlon.promea.dashboard.DashboardBuilder;
 import io.github.reinamarlon.promea.dashboard.DashboardDefinition;
 import io.github.reinamarlon.promea.dashboard.DashboardRegistry;
-import io.github.reinamarlon.promea.server.PromeaServer;
+import io.github.reinamarlon.promea.server.Server;
 import io.github.reinamarlon.promea.theme.Theme;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+/**
+ * Main entry point for Promea.
+ * Users configure the dashboard via the fluent API and then provide a {@link Server}
+ * implementation (e.g., {@code JavalinPromeaServer}) to actually serve the dashboard.
+ */
 public final class Promea {
 
     private final DashboardRegistry dashboardRegistry = new DashboardRegistry();
     private PromeaConfig config = PromeaConfig.builder().build();
-    private PromeaServer server;
+    private Server server;
 
     private Promea() {
     }
@@ -57,6 +62,10 @@ public final class Promea {
         return dashboardRegistry.find(name);
     }
 
+    public DashboardRegistry getDashboardRegistry() {
+        return dashboardRegistry;
+    }
+
     public Collection<DashboardDefinition> getDashboards() {
         return dashboardRegistry.getDashboards();
     }
@@ -65,8 +74,22 @@ public final class Promea {
         return config;
     }
 
+    /**
+     * Sets the server implementation that will serve the dashboard.
+     * This method must be called before {@link #start()}.
+     *
+     * @param server the server implementation
+     * @return this builder for fluent chaining
+     */
+    public Promea server(Server server) {
+        this.server = server;
+        return this;
+    }
+
     public void start() {
-        server = new PromeaServer(dashboardRegistry, config);
+        if (server == null) {
+            throw new IllegalStateException("Server implementation must be provided via .server(...)");
+        }
         server.start();
     }
 

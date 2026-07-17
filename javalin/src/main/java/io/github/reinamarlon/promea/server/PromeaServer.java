@@ -2,6 +2,7 @@ package io.github.reinamarlon.promea.server;
 
 import io.github.reinamarlon.promea.config.PromeaConfig;
 import io.github.reinamarlon.promea.dashboard.DashboardRegistry;
+import io.github.reinamarlon.promea.server.Server;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 
@@ -9,7 +10,11 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 
-public class PromeaServer {
+/**
+ * Javalin-based implementation of the {@link Server} interface.
+ * Serves Promea dashboards via HTTP.
+ */
+public class PromeaServer implements Server {
 
     private final DashboardRegistry dashboardRegistry;
     private final PromeaConfig config;
@@ -23,13 +28,14 @@ public class PromeaServer {
     }
 
 
+    @Override
     public void start() {
 
         server = Javalin.create(javalinConfig -> {
                     javalinConfig.staticFiles.add(staticFiles -> {
-                        staticFiles.hostedPath = "/assets";
-                        staticFiles.directory = "/assets";
-                        staticFiles.location = Location.CLASSPATH;
+                            staticFiles.hostedPath = "/assets";
+                            staticFiles.directory = "/assets";
+                            staticFiles.location = Location.CLASSPATH;
                     });
                 })
                 .get("/", ctx -> {
@@ -126,7 +132,6 @@ public class PromeaServer {
                                     StandardCharsets.UTF_8
                             );
 
-
                     ctx.html(html);
 
                 })
@@ -142,6 +147,7 @@ public class PromeaServer {
 
     }
 
+    @Override
     public void stop() {
         if (server != null) {
             server.stop();

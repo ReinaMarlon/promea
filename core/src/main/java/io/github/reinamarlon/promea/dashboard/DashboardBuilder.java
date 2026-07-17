@@ -5,11 +5,10 @@ import io.github.reinamarlon.promea.api.Promea;
 import io.github.reinamarlon.promea.component.Chart;
 import io.github.reinamarlon.promea.component.Metric;
 import io.github.reinamarlon.promea.component.Table;
-
-
 import io.github.reinamarlon.promea.metric.MetricDefinition;
 import io.github.reinamarlon.promea.chart.ChartDefinition;
 import io.github.reinamarlon.promea.table.TableDefinition;
+import io.github.reinamarlon.promea.server.Server;
 
 
 
@@ -44,6 +43,12 @@ public class DashboardBuilder {
         return this;
     }
 
+    /** Sets the server implementation that will serve the dashboard. */
+    public DashboardBuilder server(Server server) {
+        promea.server(server);
+        return this;
+    }
+
 
 
     public DashboardBuilder metric(
@@ -60,30 +65,16 @@ public class DashboardBuilder {
 
 
 
-    public DashboardBuilder chart(
-            ChartDefinition definition
-    ){
-
-        dashboard.addChart(
-                new Chart(definition)
-        );
-
+    public DashboardBuilder chart(ChartDefinition definition) {
+        dashboard.addChart(new Chart(definition));
         return this;
-
     }
 
 
 
-    public DashboardBuilder table(
-            TableDefinition definition
-    ){
-
-        dashboard.addTable(
-                new Table(definition)
-        );
-
+    public DashboardBuilder table(TableDefinition definition) {
+        dashboard.addTable(new Table(definition));
         return this;
-
     }
 
 
